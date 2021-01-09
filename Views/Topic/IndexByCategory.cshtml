@@ -1,0 +1,48 @@
+@model X.PagedList.IPagedList<Topic>
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+<body style="height: 100%">
+    <div style="box-shadow:-1em 0 0.4em lightgrey; background-color: white;margin-top: 20%; margin-left: 10%; margin-right: 10%; height: 80%">
+        @foreach (var p in @Model)
+        {@* @p.Author.UserName @p.Category.Name @p.Content @p.Date  *@
+            <div class="row" style="margin-top: 5%; margin-left: 2%;width: 96%; border: solid lightgrey;">
+                <div class="col-4">
+                    <center>
+                        <h2>
+                            @using (Html.BeginForm("Index", "Post", new {categoryId = @p.Id}, FormMethod.Post))
+                            {
+                                <a><button type="submit" style="border:none; background:transparent; width: 100%; height: 100% display: block"><p>@p.Name</p></button></a>
+                                <i class="icon-user-md" ></i>
+                            }
+                        </h2>                        
+                    </center>
+                </div>
+                <div class="col-8">
+                    <center>
+                        <small>
+                           data
+                        </small>                        
+                    </center> <br><br>
+                        content
+                </div>
+            </div>            
+        }
+        <div class="footer">
+            <p><center>
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                <pageNav style = "float: right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </pageNav>
+            </center> </p>       
+    </div>
+    </div>
+
+    
+
+</body>
+

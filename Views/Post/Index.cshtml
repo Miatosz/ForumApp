@@ -1,0 +1,58 @@
+@model X.PagedList.IPagedList<Post>
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+<body style="height: 100%">
+    <div style="box-shadow:-1em 0 0.4em lightgrey; background-color: white;margin-top: 20%; margin-left: 10%; margin-right: 10%; height: 80%">
+        @foreach (var p in @Model)
+        {@* @p.Author.UserName @p.Category.Name @p.Content @p.Date  *@
+            <div class="row" style="margin-top: 5%; margin-left: 2%;width: 96%; border: solid lightgrey;">
+                <div class="col-4">
+                    <center>
+                        <h2>
+                            @p.Author.UserName
+                        </h2>                        
+                    </center>
+                </div>
+                <div class="col-8">
+                    <center>
+                        <small>
+                           @p.Date 
+                        </small>                        
+                    </center> <br><br>
+                        @p.Content
+                </div>
+            </div>            
+        }
+        <div>
+            <button style="float: right; margin-right: 2%" class="btn btn-secondary">
+                odpowiedz
+            </button>
+            @using (Html.BeginForm("AddReply", "Post", FormMethod.Get))
+                {
+                    <a>
+                        <button type="submit" style="float: right; margin-right: 2%" class="btn btn-secondary">
+                            odpowiedz
+                        </button>
+                    </a>
+                    <i class="icon-user-md" ></i>
+                }
+        </div>
+        <div class="footer">
+            <p><center>
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                <pageNav style = "float: right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </pageNav>
+            </center> </p>       
+    </div>
+    </div>
+
+    
+
+</body>
+
